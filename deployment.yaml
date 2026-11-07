@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vle7-demo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: vle7-demo
+  template:
+    metadata:
+      labels:
+        app: vle7-demo
+    spec:
+      containers:
+        - name: vle7-app
+          image: owaiz2005/vle7-devops-app:v1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
