@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
 
@@ -41,6 +42,24 @@ pipeline {
                         docker logout
                     '''
                 }
+            }
+        }
+
+        stage('Check WSL Access') {
+            steps {
+                bat '''
+                    echo === Jenkins Windows Account ===
+                    whoami
+
+                    echo === Checking WSL ===
+                    wsl.exe -l -q
+
+                    echo === Checking Kubernetes ===
+                    wsl.exe -d Ubuntu -u gmbas -- bash -lc "kubectl get nodes"
+
+                    echo === Checking Docker ===
+                    wsl.exe -d Ubuntu -u gmbas -- bash -lc "docker --version"
+                '''
             }
         }
 
